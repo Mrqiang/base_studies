@@ -75,8 +75,8 @@ int Insert_sort(linklist h, int Data)
 	return 0;
 }
 
-
-int Delete(linklist h)
+/*Data为0时, 按顺序删除,不为0时根据取值进行删除*/
+int Delete(linklist h, int Data)
 {
 	if(!h)
 	{
@@ -84,7 +84,29 @@ int Delete(linklist h)
 		return -1;
 	}
 
-	h->next = h->next->next;
+	linklist temp = NULL;
+	if(!Data)
+	{
+		temp = h->next;
+		h->next = temp->next;
+	}
+	else
+	{
+		while(h->next != NULL && h->next->data != Data)
+		{
+			h = h->next;
+		}
+
+		if(h->next != NULL)
+		{
+			temp = h->next;
+			h->next = temp->next;
+		}
+		else
+			return 0;
+	}
+	free(temp);
+	temp = NULL;
 	return 0;
 }
 
@@ -139,6 +161,9 @@ int main()
 	Insert_sort(node_sort, 4);
 	Insert_sort(node_sort, 9);
 
+	Show(node_sort);
+	putchar(10);
+	Delete(node_sort, 0);
 	Show(node_sort);
 
 	getchar();
