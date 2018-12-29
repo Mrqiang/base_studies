@@ -21,6 +21,21 @@ doublelist Initlist()
 	return node;
 }
 
+
+doublelist double_to_looplist(doublelist h)
+{
+	doublelist p = h;
+
+	while(h->next != NULL)
+		h = h->next;
+
+	h->next = p;
+	p->prev = h;
+
+	return p;
+}
+
+
 /*头插法*/
 int Insert_head(doublelist h, int n)
 {
@@ -134,6 +149,23 @@ int Show_list(doublelist h)
 	return 0;
 }
 
+int Show_list2(doublelist h)
+{
+
+	doublelist p = h;
+	if(h->next == p)
+		return -1;
+
+	while(h->next != p)
+	{
+		h = h->next;
+		printf("%d ", h->data);
+	}
+	putchar(10);
+	return 0;
+}
+
+
 int main()
 {
 	doublelist Node = Initlist();
@@ -165,6 +197,9 @@ int main()
 	Node3 = Find_node(Node3, 5);
 
 	Show_list(Node3);
+
+	doublelist Node4 = double_to_looplist(Node2);
+	Show_list2(Node4);
 
 	return 0;
 }
